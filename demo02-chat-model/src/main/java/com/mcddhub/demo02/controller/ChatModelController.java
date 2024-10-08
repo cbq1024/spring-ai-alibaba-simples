@@ -1,5 +1,6 @@
 package com.mcddhub.demo02.controller;
 
+import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -22,6 +23,16 @@ public class ChatModelController {
     public String chat(String input) {
         ChatResponse response = chatModel.call(new Prompt(input));
         return response.getResult().getOutput().getContent();
+    }
+
+    @GetMapping("/chat-with-qwen-plus")
+    public String chatWithQwenPlus(String input) {
+        return this.chatModel
+            .call(new Prompt(
+                "Generate the names of 5 famous pirates.",
+                DashScopeChatOptions.builder()
+                    .withModel("qwen-plus")
+                    .withTemperature(0.4F).build()).getContents());
     }
 
     @GetMapping("/stream")

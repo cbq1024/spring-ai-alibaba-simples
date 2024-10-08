@@ -6,3 +6,12 @@ spring:
             api-key: ${DASHSCOPE_API_KEY}
 server:
     port: 8081
+
+logging:
+    level:
+        org:
+            springframework:
+                ai:
+                    chat:
+                        client:
+                            advisor: debug

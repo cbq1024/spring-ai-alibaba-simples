@@ -8,3 +8,16 @@ GET http://localhost:8081/demo01/streams?input=给我讲 3 个笑话吧
 
 <> 2024-10-08T094641.200.txt
 
+###
+GET http://localhost:8081/demo01/return-chat-response?input=向我介绍你自己
+
+<> 2024-10-08T170322.200.txt
+
+###
+GET http://localhost:8081/demo01/return-entity
+
+###
+GET http://localhost:8081/demo01/completion
+
+###
+GET http://localhost:8081/demo01/completion?voice=writer
