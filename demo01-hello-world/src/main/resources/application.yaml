@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: demo01-hello-world
+    ai:
+        dashscope:
+            api-key: ${DASHSCOPE_API_KEY}
+server:
+    port: 8080

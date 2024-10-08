@@ -6,9 +6,12 @@
     <groupId>com.mcddhub.ai</groupId>
     <artifactId>spring-ai-alibaba-simples</artifactId>
     <version>0.0.1</version>
-    <packaging>pom</packaging>
-
     <name>Spring AI Alibaba Examples</name>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>demo01-hello-world</module>
+    </modules>
 
     <properties>
         <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
