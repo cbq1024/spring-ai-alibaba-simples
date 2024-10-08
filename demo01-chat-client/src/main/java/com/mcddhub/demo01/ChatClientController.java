@@ -18,7 +18,7 @@ public class ChatClientController {
         this.chatClient = builder.build();
     }
 
-    @GetMapping("/chat")
+    @GetMapping("/sync")
     public String chat(String input) {
         return this.chatClient
             .prompt()
@@ -27,7 +27,7 @@ public class ChatClientController {
             .content();
     }
 
-    @GetMapping("/stream")
+    @GetMapping("/streams")
     public String stream(String input) {
         Flux<String> content = this.chatClient
             .prompt()
@@ -37,6 +37,6 @@ public class ChatClientController {
         return Objects.requireNonNull(content.collectList().block())
             .stream()
             .reduce((a, b) -> a + b)
-            .get();
+            .orElseThrow(() -> new RuntimeException("No streams available"));
     }
 }
