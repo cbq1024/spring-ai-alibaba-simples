@@ -1,0 +1,31 @@
+name: 错误报告
+description: 提交一个错误报告
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您花时间填写这份错误报告！在提交“错误”之前，请确保没有现有的 issue 与您遇到的问题相同，并且已经通过[讨论区](https://github.com/coder-mcdd/mcdd-how-to-spring-boot3/discussions)或 Slack 与团队讨论过。如果确定这是一个新问题，请按以下表格填写相关信息。
+  - type: dropdown
+    id: module
+    attributes:
+      label: 模块
+      description: 您使用的是哪个模块？
+      options:
+        - 核心
+        - 数据库
+        - 网络
+        - 安全
+        - UI
+        - ...
+    validations:
+      required: true
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: 附加信息
+      description: |
+        任何链接或参考资料，以提供有关问题的更多上下文。
+
+        提示: 您可以通过点击此区域来聚焦它，然后拖动文件进来，以附加一个最小的示例项目来重现问题，或上传更多日志文件。
