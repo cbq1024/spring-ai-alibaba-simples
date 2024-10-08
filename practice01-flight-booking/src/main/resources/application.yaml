@@ -1,8 +1,8 @@
 spring:
     application:
-        name: demo01-chat-client
+        name: practice01-flight-booking
     ai:
         dashscope:
             api-key: ${DASHSCOPE_API_KEY}
 server:
-    port: 8081
+    port: 9090

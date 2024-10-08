@@ -11,6 +11,12 @@
     <packaging>pom</packaging>
     <modules>
         <module>demo01-chat-client</module>
+        <module>demo02-chat-model</module>
+        <module>demo03-function-calling</module>
+        <module>demo04-prompt</module>
+        <module>demo05-output-parser</module>
+        <module>demo06-rag</module>
+        <module>practice01-flight-booking</module>
     </modules>
 
     <properties>

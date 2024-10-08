@@ -1,8 +1,8 @@
 spring:
     application:
-        name: demo01-chat-client
+        name: demo04-prompt
     ai:
         dashscope:
             api-key: ${DASHSCOPE_API_KEY}
 server:
-    port: 8081
+    port: 8084
