@@ -224,3 +224,109 @@ GET http://localhost:8083/demo03/similar
 ![image-20241008200922261](./../assets/image-20241008200922261.png)
 
 ![image-20241008201447396](./../assets/image-20241008201447396.png)
+
+# 工具(Function Calling)
+
+“工具（Tool）”或 “功能调用（Function Calling）”允许大型语言模型（LLM）在必要时调用一个或多个可用的工具，这些工具通常由开发者定义。工具可以是任何东西：网页搜索、对外部 API 的调用，或特定代码的执行等。LLM 本身不能实际调用工具；相反，它们会在响应中表达调用特定工具的意图（而不是以纯文本回应）。然后，我们应用程序应该执行这个工具，并报告工具执行的结果给模型。
+
+例如，我们知道 LLM 自身在数学方面不是特别擅长。如果你的用例偶尔涉及数学计算，你可能会想提供给 LLM 一个“数学工具”。通过在请求中声明一个或多个工具，LLM 可以在认为合适时调用其中之一。给定一个数学问题和一组数学工具，LLM 可能会决定为正确回答问题，它应该首先调用其中一个提供的数学工具。接下来，让我们用一个示例看一下 Function Calling 的具体工作过程。以下是没有 Function Calling 的一个消息交互过程示例，模型给给出的结果非常接近但是并不正确：
+
+```tex
+Request:
+- messages:
+    - UserMessage:
+        - text: What is the square root of 475695037565?
+
+Response:
+- AiMessage:
+    - text: The square root of 475695037565 is approximately 689710.
+```
+
+以下是包含了 Function Calling 的消息交互过程：
+
+```tex
+Request 1:
+- messages:
+    - UserMessage:
+        - text: What is the square root of 475695037565?
+- tools:
+    - sum(double a, double b): Sums 2 given numbers
+    - squareRoot(double x): Returns a square root of a given number
+
+Response 1:
+- AiMessage:
+    - toolExecutionRequests:
+        - squareRoot(475695037565)
+
+
+... here we are executing the squareRoot method with the "475695037565" argument and getting "689706.486532" as a result ...
+
+
+Request 2:
+- messages:
+    - UserMessage:
+        - text: What is the square root of 475695037565?
+    - AiMessage:
+        - toolExecutionRequests:
+            - squareRoot(475695037565)
+    - ToolExecutionResultMessage:
+        - text: 689706.486532
+
+Response 2:
+- AiMessage:
+    - text: The square root of 475695037565 is 689706.486532.
+```
+
+其中，函数定义如下：
+
+```java
+@Bean
+@Description("Get the weather in location") // function description
+public Function<MockWeatherService.Request, MockWeatherService.Response> weatherFunction1() {
+  return new MockWeatherService();
+}
+```
+
+正如你所看到的，当 LLM 可以访问工具时，它可以在合适的情况下决定调用其中一个工具，这是一个非常强大的功能。在这个简单的示例中，我们给 LLM 提供了基本的数学工具，但想象一下，如果我们给它提供了，比如说，googleSearch 和 sendEmail 工具，并且有一个查询像是 “我的朋友想了解 AI 领域的最新新闻。将简短的总结发送到 [friend@email.com](mailto:friend@email.com)”，那么它可以使用 googleSearch 工具查找最新新闻，然后总结这些信息并通过 sendEmail 工具将总结发送到指定的邮箱。
+
+# API 概览
+
+**通常，自定义函数需要提供一个 `name`、`description` 和 `function call signature`，以便模型知道函数能做什么、期望的输入参数。Spring AI 使这一过程变得简单，只需定义一个返回 `java.util.Function` 的 @Bean 定义，并在调用 ChatModel 时将 bean 名称作为选项进行注册。在底层，Spring 会用适当的适配器代码包装你的 POJO（即函数），以便与 AI 模型进行交互，免去了编写繁琐的样板代码。`FunctionCallback.java` 接口和配套的 `FunctionCallbackWrapper.java` 工具类包含了底层实现代码，它们是简化 Java 回调函数的实现和注册的关键。**
+
+![image-20241008201923189](./../assets/image-20241008201923189.png)
+
+# 使用示例
+
+在以下示例中，我们将创建一个聊天机器人，通过调用我们自己的函数来回答问题。为了支持聊天机器人的响应，我们将注册一个自己的函数，该函数接受一个位置并返回该位置的当前天气。当模型需要回答诸如 “What’s the weather like in Boston?” 这样的问题时，AI 模型将调用客户端，将位置值作为参数传递给函数。这种类似 RPC 的数据将以 JSON 格式传递。
+
+我们的函数调用某个基于 SaaS 的天气服务 API，并将天气响应返回给模型以完成对话。在这个示例中，我们将使用一个名为 MockWeatherService 的简单实现，它为不同位置硬编码了温度。
+
+以下是代表天气服务 API 的 MockWeatherService.java：
+
+```java
+
+```
+
+## 定义&注册函数
+
+通过这种方法，您可以在应用程序上下文中定义 @Beans，就像定义任何其他 Spring 管理对象一样。
+
+在内部，Spring AI ChatModel 将创建一个 FunctionCallbackWrapper 包装器的实例，该包装器添加通过 AI 模型调用它的逻辑。@Bean 的名称作为 ChatOption 传递。
+
+
+
+
+
+## 为 Prompt 指定函数
+
+为了让模型知道并调用您的 CurrentWeather 函数，您需要在 Prompt 请求中启用它。
+
+
+
+## 动态注册函数
+
+除了自动配置之外，您还可以使用 Prompt 请求动态注册回调函数：
+
+```java
+
+```

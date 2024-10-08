@@ -3,3 +3,13 @@ GET http://localhost:8083/demo03/embed
 
 ###
 GET http://localhost:8083/demo03/similar
+
+###
+GET http://localhost:8083/demo03/function/weather-service?subject=2024-08-22 杭州天气怎么样
+
+<> 2024-10-08T204819.200.txt
+<> 2024-10-08T204802.200.txt
+<> 2024-10-08T204629.200.txt
+
+###
+GET http://localhost:8083/demo03/function/order-detail

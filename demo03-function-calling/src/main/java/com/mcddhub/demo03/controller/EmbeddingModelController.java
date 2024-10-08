@@ -1,8 +1,7 @@
-package com.mcddhub.demo03;
+package com.mcddhub.demo03.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.web.bind.annotation.GetMapping;
