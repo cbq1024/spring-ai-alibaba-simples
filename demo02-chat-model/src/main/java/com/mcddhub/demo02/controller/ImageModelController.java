@@ -1,5 +1,6 @@
 package com.mcddhub.demo02.controller;
 
+import com.knuddels.jtokkit.api.ModelType;
 import org.springframework.ai.image.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public class ImageModelController {
     @GetMapping("/generate")
     public String image(String input) {
         ImageOptions options = ImageOptionsBuilder.builder()
-            .withModel("wanx-v1")
+            .withModel("flux-dev")
             .build();
         ImagePrompt prompt = new ImagePrompt(input, options);
         ImageResponse response = imageModel.call(prompt);

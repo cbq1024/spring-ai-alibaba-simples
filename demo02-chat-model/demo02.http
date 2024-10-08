@@ -1,0 +1,22 @@
+###
+GET http://localhost:8082/demo02/chats/single-by-string?input=给我讲个笑话吧
+
+<> 2024-10-08T192820.200.txt
+
+###
+GET http://localhost:8082/demo02/chats/single-by-prompt?input=给我讲个笑话吧
+
+<> 2024-10-08T192828.200.txt
+
+###
+GET http://localhost:8082/demo02/chats/chat-with-qwen-plus?input=给我讲个笑话吧
+
+<> 2024-10-08T192832.200.txt
+
+###
+GET http://localhost:8082/demo02/chats/stream?input=给我讲个笑话吧
+
+<> 2024-10-08T192839.200.txt
+
+###
+GET http://localhost:8082/demo02/images/generate?input=鳄鱼

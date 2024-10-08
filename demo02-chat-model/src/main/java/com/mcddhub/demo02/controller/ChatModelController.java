@@ -19,9 +19,18 @@ public class ChatModelController {
         this.chatModel = chatModel;
     }
 
-    @GetMapping("/single")
-    public String chat(String input) {
+    @GetMapping("/single-by-string")
+    public String singleByString(String input) {
         ChatResponse response = chatModel.call(new Prompt(input));
+        return response.getResult().getOutput().getContent();
+    }
+
+    @GetMapping("/single-by-prompt")
+    public String singleByPrompt(String input) {
+        Prompt prompt = new Prompt(
+            input,
+            DashScopeChatOptions.builder().build());
+        ChatResponse response = chatModel.call(prompt);
         return response.getResult().getOutput().getContent();
     }
 
@@ -38,8 +47,8 @@ public class ChatModelController {
     @GetMapping("/stream")
     public String stream(String input) {
         StringBuilder builder = new StringBuilder();
-        Flux<ChatResponse> stream = chatModel.stream(new Prompt(input));
-        stream.toStream().toList().forEach(resp -> builder.append(resp.getResult().getOutput().getContent()));
+        Flux<ChatResponse> responseFlux = chatModel.stream(new Prompt(input));
+        responseFlux.toStream().toList().forEach(resp -> builder.append(resp.getResult().getOutput().getContent()));
         return builder.toString();
     }
 }
