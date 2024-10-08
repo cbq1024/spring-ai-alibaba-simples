@@ -10,11 +10,11 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/demo01")
-public class HelloWorldController {
+public class ChatClientController {
 
     private final ChatClient chatClient;
 
-    public HelloWorldController(ChatClient.Builder builder) {
+    public ChatClientController(ChatClient.Builder builder) {
         this.chatClient = builder.build();
     }
 

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mcddhub.ai</groupId>
-    <artifactId>demo01-hello-world</artifactId>
+    <artifactId>demo01-chat-client</artifactId>
     <version>0.0.1</version>
-    <name>demo01-hello-world</name>
+    <name>demo01-chat-client</name>
     <description>Demo project for Spring AI Alibaba</description>
 
     <properties>

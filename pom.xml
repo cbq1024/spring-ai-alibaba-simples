@@ -10,7 +10,7 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>demo01-hello-world</module>
+        <module>demo01-chat-client</module>
     </modules>
 
     <properties>

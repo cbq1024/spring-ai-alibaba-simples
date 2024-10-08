@@ -1,6 +1,6 @@
 spring:
     application:
-        name: demo01-hello-world
+        name: demo01-chat-client
     ai:
         dashscope:
             api-key: ${DASHSCOPE_API_KEY}
